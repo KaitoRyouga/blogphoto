@@ -33,7 +33,7 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
     Route::resource('bill', 'AdminBillController');
     Route::resource('services', 'AdminServicesController');
     Route::resource('concept', 'AdminConceptController');
-    Route::resource('conceptpromotion', 'AdminConceptPromotionController');
+    Route::resource('conceptpromotion', 'AdminConceptRegisterPromotionController');
     Route::resource('conceptpromotionfree', 'AdminConceptPromotionFreeController');
     Route::resource('conceptpromotionother', 'AdminConceptPromotionOtherController');
     Route::resource('category', 'AdminCategoryController');
@@ -41,12 +41,9 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
     Route::post('uploadConceptImg', 'AdminUploadConceptController@postImages');
     Route::post('deleteImg', 'AdminUploadController@fileDestroy');
     Route::post('deleteConceptImg', 'AdminUploadConceptController@fileDestroy');
-    // Route::get('testajax', function() {
-        // return view('admin.testajax');
-    // });
     Route::resource('free', 'AdminTestajax');
     Route::resource('other', 'AdminTestajax2');
-    // Route::resource('registerpromotion', 'AdminConceptRegisterController');
+    Route::resource('registerpromotion', 'AdminTestajax3');
     Route::resource('conceptregister', 'AdminConceptRegisterController');
 });
 

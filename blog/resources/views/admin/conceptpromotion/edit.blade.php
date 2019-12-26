@@ -6,7 +6,8 @@
         </h1>
     </section>
     <section class="content">
-        <form action="{{ url('admin/concept') }}/{{ $concept->urlconcept }}" method="POST">
+        {{-- <form action="{{ url('admin/free') }}/{{ $concept->free }}" method="POST"> --}}
+        <form action="{{ url('admin/conceptpromotion') }}/{{ $concept->promo }}" method="POST">
           <input type="hidden" name="_method" value="PUT">
             {{ csrf_field() }}
             @if(count($errors) >0)
@@ -17,23 +18,57 @@
                 </ul>
             @endif
             <div class="box">
-                <div class="box-body row">
-                    <div class="form-group col-md-12">
-                        <label>Tag dịch vụ</label>
-                            <input type="text" name="txtName" class="form-control" value="{{ $concept->urlconcept }}">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label>Tiêu đề</label>
-                            <input name="title" class="form-control" value="{{ $concept->title }}"></input>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label>Nội dung</label>
-                            <textarea name="content" class="form-control">{{ $concept->content }}</textarea>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="dropzone" id="my-dropzone" name="myDropzone">
 
+                <div class="box-body row">
+
+                <div class="form-group col-md-12">
+                    <label style="margin-top: 1em">Tag Concept Promotion Free</label>
+                    <select class="form-control" name="conceptInfo">
+                        <option value="0">---</option>
+                        @if(isset($sidebar) && $sidebar)
+                        @foreach($sidebar as $side)
+                        <option value="{{ $side->title }}">{{ $side->title }}</option>
+                        @endforeach
+                        @endif
+                        @foreach($test3 as $te)
+                        <option id="default" value="{{ $te->test3 }}" selected="">{{ $te->test3 }}</option>
+                        @endforeach
+                    </select>
+                          </div>
+                  <script type="text/javascript">
+                    $('.form-control').change(function () {
+
+                      $.ajaxSetup({ 
+                            headers: { 
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
+                            } 
+                        });
+
+
+                        $.ajax({
+
+                            type: 'POST',
+                            url: 'free/' + $("#default").val(),
+                            data: {
+                                id: $(this).val(),
+                                _method : 'PUT',
+                                _token : $('meta[name="csrf-token"]').attr('content')
+                            },
+                            dataType: 'json',
+                            success: function(data) {
+                                // window.location.reload();
+                            },
+                            error: function(data) { 
+                                window.location.reload();
+                            }
+                        });
+
+                    });
+                  </script>
+
+                    <div class="form-group col-md-12">
+                        <label>Promotion</label>
+                            <input type="text" name="txtName" class="form-control" value="{{ $concept->promo }}">
                     </div>
                 </div>
                 <div class="box-footer row">
@@ -45,62 +80,4 @@
             </div>
         </form>
     </section>
-@endsection
-
-@section('page-js-script')
-    <link rel="stylesheet" href="{{ asset('Admin/dist/css/dropzone.css') }}">
-    <script src="{{ asset('Admin/dist/js/dropzone.js') }}"></script>
-    <script type="text/javascript">
-       Dropzone.options.myDropzone= {
-           url: '{{ url('admin/uploadImg') }}',
-           headers: {
-               'X-CSRF-TOKEN': '{!! csrf_token() !!}'
-           },
-           success: function (file) {
-      $('form').append('<input type="hidden" name="filename" value="' + file.name+ '">')
-    },
-           autoProcessQueue: true,
-           uploadMultiple: true,
-           parallelUploads: 5,
-           maxFiles: 10,
-           maxFilesize: 5,
-           acceptedFiles: ".jpeg,.jpg,.png,.gif",
-           dictFileTooBig: 'Image is bigger than 5MB',
-           addRemoveLinks: true,
-           removedfile: function(file) {
-           var name = file.name;    
-           name =name.replace(/\s+/g, '-').toLowerCase();    /*only spaces*/
-            $.ajax({
-                type: 'POST',
-                url: '{{ url('admin/deleteImg') }}',
-                headers: {
-                     'X-CSRF-TOKEN': '{!! csrf_token() !!}'
-                 },
-                data: "id="+name,
-                dataType: 'html',
-                success: function(data) {
-                    $("#msg").html(data);
-                }
-            });
-          var _ref;
-          if (file.previewElement) {
-            if ((_ref = file.previewElement) != null) {
-              _ref.parentNode.removeChild(file.previewElement);
-            }
-          }
-          return this._updateMaxFilesReachedClass();
-        },
-        previewsContainer: null,
-        hiddenInputContainer: "body",
-       }
-    </script>
-    <style>
-        .dropzone {
-            border: 2px dashed #0087F7;
-            border-radius: 5px;
-            background: white;
-            padding: 100px;
-            margin: 20px 6px;
-        }
-    </style>
 @endsection

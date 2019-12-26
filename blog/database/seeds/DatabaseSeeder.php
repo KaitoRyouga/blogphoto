@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
         ];
 
         $data_test = [
-            'test2' => 'default',
+            'test3' => 'default',
         ];
 
         // DB::table('services')->insert($data_services);
-        DB::table('test2')->insert($data_test);
+        DB::table('test3')->insert($data_test);
     }
 }

@@ -2,7 +2,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Create concept promotion
+            Create concept other promotion
         </h1>
     </section>
     <section class="content ">
@@ -19,30 +19,59 @@
             <div class="col-md-6">
                 <div class="box">
                     <div class="box-body ">
+
+
+                <div class="form-group col-md-12">
+                    <label style="margin-top: 1em">Tag Concept Promotion Other</label>
+                    <select class="form-control" name="conceptInfo">
+                        <option value="0">---</option>
+                        @if(isset($sidebar) && $sidebar)
+                        @foreach($sidebar as $side)
+                        <option value="{{ $side->title }}">{{ $side->title }}</option>
+                        @endforeach
+                        @endif
+                        @foreach($test3 as $te)
+                        <option id="default" value="{{ $te->test3 }}" selected="">{{ $te->test3 }}</option>
+                        @endforeach
+                    </select>
+                          </div>
+                  <script type="text/javascript">
+                    $('.form-control').change(function () {
+
+                      $.ajaxSetup({ 
+                            headers: { 
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
+                            } 
+                        });
+
+
+                        $.ajax({
+
+                            type: 'POST',
+                            url: 'other/' + $("#default").val(),
+                            data: {
+                                id: $(this).val(),
+                                _method : 'PUT',
+                                _token : $('meta[name="csrf-token"]').attr('content')
+                            },
+                            dataType: 'json',
+                            success: function(data) {
+                                // window.location.reload();
+                            },
+                            error: function(data) { 
+                                window.location.reload();
+                            }
+                        });
+
+                    });
+                  </script>
+
+
                         <div class="form-group col-md-12">
-                            <label>Tag concept promotion</label>
-                            <select class="form-control" name="conceptInfo">
-                                <option value="0">---</option>
-                                @foreach($listconceptInfo as $concept)
-                                    <option value="{{ $concept->urlconcept }}"
-                                        >{{ $concept->title }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label>Free</label><br>
-                            <input type="textarea" name="title" class="form-control">{{ old('title') }}</input>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label>Nội dung</label>
-                            <textarea name="content" class="form-control"></textarea>
+                            <label>Promo</label><br>
+                            <textarea name="promo" class="form-control"></textarea>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="dropzone" id="my-dropzone" name="myDropzone">
-
                 </div>
             </div>
             <div class="col-md-12">
@@ -54,62 +83,4 @@
         </form>
 
     </section>
-@endsection
-
-@section('page-js-script')
-    <link rel="stylesheet" href="{{ asset('Admin/dist/css/dropzone.css') }}">
-    <script src="{{ asset('Admin/dist/js/dropzone.js') }}"></script>
-    <script type="text/javascript">
-       Dropzone.options.myDropzone= {
-           url: '{{ url('admin/uploadConceptImg') }}',
-           headers: {
-               'X-CSRF-TOKEN': '{!! csrf_token() !!}'
-           },
-           success: function (file) {
-      $('form').append('<input type="hidden" name="filename" value="' + file.name+ '">')
-    },
-           autoProcessQueue: true,
-           uploadMultiple: true,
-           parallelUploads: 5,
-           maxFiles: 10,
-           maxFilesize: 5,
-           acceptedFiles: ".jpeg,.jpg,.png,.gif",
-           dictFileTooBig: 'Image is bigger than 5MB',
-           addRemoveLinks: true,
-           removedfile: function(file) {
-           var name = file.name;    
-           name =name.replace(/\s+/g, '-').toLowerCase();    /*only spaces*/
-            $.ajax({
-                type: 'POST',
-                url: '{{ url('admin/deleteConceptImg') }}',
-                headers: {
-                     'X-CSRF-TOKEN': '{!! csrf_token() !!}'
-                 },
-                data: "id="+name,
-                dataType: 'html',
-                success: function(data) {
-                    $("#msg").html(data);
-                }
-            });
-          var _ref;
-          if (file.previewElement) {
-            if ((_ref = file.previewElement) != null) {
-              _ref.parentNode.removeChild(file.previewElement);
-            }
-          }
-          return this._updateMaxFilesReachedClass();
-        },
-        previewsContainer: null,
-        hiddenInputContainer: "body",
-       }
-    </script>
-    <style>
-        .dropzone {
-            border: 2px dashed #0087F7;
-            border-radius: 5px;
-            background: white;
-            padding: 100px;
-            margin: 20px 6px;
-        }
-    </style>
 @endsection
