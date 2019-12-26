@@ -20,6 +20,9 @@
     <form id="header-search" action="search/name">
         <input type="search" name="search" id="myInput" placeholder="Search for names.." class="form-control m-input">
         <div id="search-suggest" class="s-suggest"></div>
+        @if(isset($Listsearch))
+        {{ var_dump($Listsearch) }}
+        @endif
         {{ csrf_field() }}
     </form>
     <script type="text/javascript">
@@ -27,6 +30,7 @@
          var search = $(this).serialize();
           if ($(this).find('.m-input').val() == '') {
              $('#search-suggest div').hide();
+             $('.box div').show();
          } else {
              $.ajax({
                  url: '/search',
@@ -37,6 +41,7 @@
                  $('#search-suggest').html('');
                  $('#search-suggest').append(res)
              })
+             $('.box div').hide();
          };
      });
     </script>
@@ -65,7 +70,6 @@
                                     <td>
                                         <div class="btn-group">
                                             <a href="{{ url('admin/services')}}/{{ $ser->urlservices }}/edit" class="btn btn-default bg-purple">
-                                                {{-- <i class="fa fa-edit"></i> --}}
                                                 <span>Edits</span>
                                             </a>
                                             <form action="{{ url('admin/services')}}/{{ $ser->urlservices }}" method="POST">

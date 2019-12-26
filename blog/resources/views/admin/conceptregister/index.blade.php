@@ -27,9 +27,10 @@
          var search = $(this).serialize();
           if ($(this).find('.m-input').val() == '') {
              $('#search-suggest div').hide();
+             $('.box div').show();
          } else {
              $.ajax({
-                 url: '/searchconcept',
+                 url: '/searchpromotion',
                  type: 'POST',
                  data: search,
              })
@@ -37,6 +38,7 @@
                  $('#search-suggest').html('');
                  $('#search-suggest').append(res)
              })
+             $('.box div').hide();
          };
      });
     </script>

@@ -16,29 +16,6 @@
     @if (Session::has('message'))
         <div class="alert alert-info"> {{ Session::get('message') }}</div>
     @endif
-        <form id="header-search" action="search/name">
-        <input type="search" name="search" id="myInput" placeholder="Search for names.." class="form-control m-input">
-        <div id="search-suggest" class="s-suggest"></div>
-        {{ csrf_field() }}
-    </form>
-    <script type="text/javascript">
-     $('#header-search').on('keyup', function() {
-         var search = $(this).serialize();
-          if ($(this).find('.m-input').val() == '') {
-             $('#search-suggest div').hide();
-         } else {
-             $.ajax({
-                 url: '/searchconcept',
-                 type: 'POST',
-                 data: search,
-             })
-             .done(function(res) {
-                 $('#search-suggest').html('');
-                 $('#search-suggest').append(res)
-             })
-         };
-     });
-    </script>
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">

@@ -117,7 +117,6 @@ class AdminServicesController extends Controller
         } else {
             $services = services::where('urlservices', "$id")->first();
             $services->urlservices = Request::get('txtName');
-            $services->image_name = Request::get('filename');
             $services->title = Request::get('title');
             $services->content = Request::get('content');
             $services->save();

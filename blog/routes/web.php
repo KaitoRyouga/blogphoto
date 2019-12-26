@@ -76,8 +76,9 @@ Route::get('baogia', function() {
 
 Route::get('/search/name', 'SearchController@searchByName');
 
-Route::get('/search', 'HomeSearchController@search');
 Route::post('/search', 'HomeSearchController@searchFullText')->name('search');
 
-Route::get('/searchconcept', 'HomeSearchConceptController@search');
 Route::post('/searchconcept', 'HomeSearchConceptController@searchFullText')->name('search');
+
+Route::post('/searchpromotion', 'HomeSearchPromotionController@searchFullText')->name('search');
+Route::post('/searchfree', 'HomeSearchConceptFreeController@searchFullText')->name('search');

@@ -34,7 +34,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/concept" class="nav-link active">
+                <a href="/admin/concept" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Concept</p>
                 </a>
@@ -67,7 +67,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/free" class="nav-link active">
+                <a href="/admin/free" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Free</p>
                 </a>

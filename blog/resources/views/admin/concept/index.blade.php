@@ -27,6 +27,7 @@
          var search = $(this).serialize();
           if ($(this).find('.m-input').val() == '') {
              $('#search-suggest div').hide();
+             $('.box div').show();
          } else {
              $.ajax({
                  url: '/searchconcept',
@@ -37,6 +38,7 @@
                  $('#search-suggest').html('');
                  $('#search-suggest').append(res)
              })
+             $('.box div').hide();
          };
      });
     </script>
